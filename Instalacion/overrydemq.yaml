@@ -1,0 +1,8 @@
+license: "accept"
+queueManager:
+name: "b2bi"
+dev:
+secret:
+name: "mq-secret"
+adminPasswordKey: "adminPassword"
+appPasswordKey: "appPassword"

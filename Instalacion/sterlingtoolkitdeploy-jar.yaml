@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu-jar
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-jar
+  template:
+    metadata:
+      labels:
+        app: ubuntu-jar
+    spec:
+      containers:
+      - name: ubuntu-jar
+        #image: ubuntu:18.04
+        image: quay.io/andresfelipecatanog/sidecar-sterling:latest
+        command: ["/bin/bash", "-ce", "tail -f /dev/null"]
+        #command: ["/usr/sbin/useradd"] 
+        #args: ["abc"]
+        volumeMounts:
+        - mountPath: /ibm/resources/
+          name: resources
+      volumes:
+      - name: resources
+        persistentVolumeClaim:
+          claimName: my-release-name-test1-b2bi-resources

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sterlingtoolkit
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sterlingtoolkit
+  template:
+    metadata:
+      labels:
+        app: sterlingtoolkit
+    spec:
+      containers:
+      - name: sterlingtoolkit
+        image: ubuntu:18.04
+        #image: quay.io/andresfelipecatanog/sidecar-sterling:latest
+        command: ["/bin/bash", "-ce", "tail -f /dev/null"]
+        #command: ["/usr/sbin/useradd"] 
+        #args: ["abc"]
+        volumeMounts:
+        - mountPath: /var/nfs-data
+          name: volume
+      volumes:
+      - name: volume
+        persistentVolumeClaim:
+          claimName: sterlingb2bitoolkit-pvc

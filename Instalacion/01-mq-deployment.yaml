@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqsterling-ibm-mq
+  namespace: mqsterling
+  labels:
+    app: mqsterling-ibm-mq
+    app.kubernetes.io/part-of: mqsterling-ibm-mq
+    app-type: mq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mqsterling-ibm-mq
+  template:
+    metadata:
+      labels:
+        app: mqsterling-ibm-mq
+        app.kubernetes.io/part-of: mqsterling-ibm-mq
+        app-type: mq
+        deployment: mqsterling-ibm-mq
+      annotations:
+        openshift.io/generated-by: IBM
+    spec:
+      
+      containers:
+      - image: ibmcom/mq
+        name: mqsterling-ibm-mq
+        imagePullPolicy: Always
+        ports:
+            - containerPort: 1414
+              protocol: TCP
+            - containerPort: 9157
+              protocol: TCP
+            - containerPort: 9443
+              protocol: TCP     
+        env:
+        #----------------------------------CONFIG------------------
+        - name: LICENSE
+          value: 'accept'
+        - name: MQ_QMGR_NAME
+          value: 'b2bi'
+        - name: MQ_ADMIN_PASSWORD
+          value: 'password'
+        - name: MQ_APP_PASSWORD 
+          value: 'password'

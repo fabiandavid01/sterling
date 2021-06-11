@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+ name: sterlingb2bitoolkit-pv
+ labels:
+    failure-domain.beta.kubernetes.io/region: us-east
+    failure-domain.beta.kubernetes.io/zone: wdc04
+spec:
+ capacity:
+   storage: 20Gi
+ accessModes:
+   - ReadWriteMany
+ nfs:
+   server: fsf-wdc0402g-fz.service.softlayer.com
+   path: /IBM02SEV1594147_27/data01
+   
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+ name: sterlingb2bitoolkit-pvc
+spec:
+ accessModes:
+   - ReadWriteMany
+ resources:
+   requests:
+     storage: 20Gi
+ storageClassName: ""
